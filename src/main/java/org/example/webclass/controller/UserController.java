@@ -3,18 +3,20 @@ package org.example.webclass.controller;
 import org.example.webclass.mapper.UserMapper;
 import org.example.webclass.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*") 
-public class LoginController {
+public class UserController {
 
     private final UserMapper userMapper;
 
     @Autowired
-    public LoginController(UserMapper userMapper) {
+    public UserController(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
 
@@ -34,4 +36,22 @@ public class LoginController {
 
         }
     }
+
+    @PostMapping("/regist")
+    public ResponseEntity<?> register(@RequestBody User user) {
+        System.out.println(user);
+        User use = userMapper.findUser(user.getName());
+        System.out.println(use);
+        if (use == null) {
+            userMapper.insertUser(user);
+            user = userMapper.findUser(user.getName());
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Map.of("message", "注册失败：该用户名已被占用"));
+        }
+    }
+
+
 }
