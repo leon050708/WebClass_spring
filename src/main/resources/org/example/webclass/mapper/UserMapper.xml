@@ -6,21 +6,29 @@
 
     <insert id="insertUser">
         insert into
-        user (name,passw) values (#{name},#{passw})
+            user (name,passw) values (#{name},#{passw})
     </insert>
 
-    <update id="updateUserstars">
-
+    <update id="updateUserStars">
+        UPDATE user
+        SET stars = #{stars}
+        WHERE id = #{id}
     </update>
 
     <select id="findUserByNameAndPassword" resultType="org.example.webclass.model.User">
-        SELECT id, name, passw
+        SELECT id, name, passw, stars
         FROM user
         WHERE name = #{name} AND passw = #{passw}
     </select>
 
     <select id="findUser" resultType="org.example.webclass.model.User">
-        select id, name, passw from user where name = #{name}
+        select id, name, passw, stars from user where name = #{name}
+    </select>
+
+    <select id="findStarsById" resultType="java.lang.String">
+        SELECT stars
+        FROM user
+        WHERE id = #{id}
     </select>
 
 </mapper>

@@ -12,5 +12,9 @@ public interface UserMapper {
 
     User findUser(@Param("name") String name);
 
-    void updateUserstars(@Param("id") int id);
+    // 新增：根据用户ID查询stars字段
+    String findStarsById(@Param("id") Long id);
+
+    // 修改：更新用户的stars字段，注意参数从int改为了Long，并增加了stars字符串
+    void updateUserStars(@Param("id") Long id, @Param("stars") String stars);
 }
