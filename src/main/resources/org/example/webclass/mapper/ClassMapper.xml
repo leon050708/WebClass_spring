@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.webclass.mapper.ClassMapper">
+
+    <select id="findByCriteria" resultType="org.example.webclass.model.Class" parameterType="org.example.webclass.model.ClassDto">
+        SELECT id, class_num, class_code, class_name, class_place, class_type
+        FROM class
+        <where>
+            <if test="className != null and className != ''">
+                AND class_name LIKE CONCAT('%', #{className}, '%')
+            </if>
+            <if test="classNum != null and classNum != ''">
+                AND class_num LIKE CONCAT('%', #{classNum}, '%')
+            </if>
+            <if test="classCode != null and classCode != ''">
+                AND class_code LIKE CONCAT('%', #{classCode}, '%')
+            </if>
+            <if test="classPlace != null and classPlace != ''">
+                AND class_place LIKE CONCAT('%', #{classPlace}, '%')
+            </if>
+            <if test="classType != null and classType != ''">
+                AND class_type LIKE CONCAT('%', #{classType}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findByCriteria_sc" resultType="org.example.webclass.model.Class_sc" parameterType="org.example.webclass.model.Class_scDto">
+        SELECT id, class_code,class_name,class_time,class_score,class_begin,class_type,class_info
+        FROM class_sc
+        <where>
+            <if test="className != null and className != ''">
+                AND class_name LIKE CONCAT('%', #{className}, '%')
+            </if>
+            <if test="classCode != null and classCode != ''">
+                AND class_code LIKE CONCAT('%', #{classCode}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
